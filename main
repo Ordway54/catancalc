@@ -1,0 +1,36 @@
+#num_token_values = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12]
+class Percent(float):
+    def __str__(self):
+        return '{:.2%}'.format(self)
+
+rollsdict = {
+    # number token: its pip value,
+    "2": 1,
+    "3": 2,
+    "4": 3,
+    "5": 4,
+    "6": 5,
+    "8": 5,
+    "9": 4,
+    "10": 3,
+    "11": 2,
+    "12": 1,
+}
+
+settlement_nums = list(input("Enter the number token values adjacent to your settlement(s).\nMust be 3 values separated by commas. (Ex: 2,5,3) >>> ").split(","))
+
+def addpips(pips): # this function adds the pips from the tokens entered by the user and calculates the combined odds of any of the token numbers (hexes) being rolled
+    global roll_chance
+    # the index of each token number is determined and then matched with its corresponding key value pair located in the rollsdict dictionary above
+    pip_total = rollsdict.get(settlement_nums[0]) + rollsdict.get(settlement_nums[1]) + rollsdict.get(settlement_nums[2]) 
+    roll_chance = pip_total / 36 # 36 is the number of possible permutations for rolling two dice
+    return roll_chance
+
+
+addpips(settlement_nums) # addpips function is called and passes the settlement_nums variable as an argument
+roll_chance = Percent(roll_chance) # the roll_chance variable is assigned the Percent class, which forces the returned decimal result of line 27 into a percentage format
+print(f"The odds of this settlement earning at least one resource card on any given roll is {roll_chance}.")
+
+# to be addressed: 
+# program only accepts 3 values entered. It should accept 1, 2 or 3 values.
+
